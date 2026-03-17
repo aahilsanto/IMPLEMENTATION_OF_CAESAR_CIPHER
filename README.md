@@ -17,36 +17,29 @@ STEP-5: Display the cipher text obtained above.
 
 ## PROGRAM:
 
-```
-#include <stdio.h>
+```python
+def caesar_encrypt(text, key):
+    result = ""
+    for c in text:
+        if c.isupper():
+            result += chr(((ord(c) - ord('A') + key) % 26 + 26) % 26 + ord('A'))
+        elif c.islower():
+            result += chr(((ord(c) - ord('a') + key) % 26 + 26) % 26 + ord('a'))
+        else:
+            result += c
+    return result
 
-void caesarEncrypt(char *text, int key) {
-    for (int i = 0; text[i] != '\0'; i++) {
-        char c = text[i];
-        if (c >= 'A' && c <= 'Z'){
-            text[i] = ((c - 'A' + key) % 26 + 26) % 26 + 'A';
-        }
-        else if (c >= 'a' && c <= 'z') {
-            text[i] = ((c - 'a' + key) % 26 + 26) % 26 + 'a';
-        }
-    }
-}
-void caesarDecrypt(char *text, int key) {
-    caesarEncrypt(text, -key);
-}
-int main(){
-    char message[100]; 
-    int key;
-    printf("Enter the message to encrypt: ");
-    fgets(message, sizeof(message), stdin); 
-    printf("Enter the Caesar Cipher key (an integer): ");
-    scanf("%d", &key);
-    caesarEncrypt(message, key);
-    printf("Encrypted Message: %s", message);
-    caesarDecrypt(message, key);
-    printf("Decrypted Message: %s", message);
-    return 0;
-}
+def caesar_decrypt(text, key):
+    return caesar_encrypt(text, -key)
+
+message = input("Enter the message to encrypt: ")
+key = int(input("Enter the Caesar Cipher key (an integer): "))
+
+encrypted = caesar_encrypt(message, key)
+print(f"Encrypted Message: {encrypted}")
+
+decrypted = caesar_decrypt(encrypted, key)
+print(f"Decrypted Message: {decrypted}")
 ```
 
 ## OUTPUT:
